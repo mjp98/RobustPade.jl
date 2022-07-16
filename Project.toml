@@ -1,0 +1,13 @@
+name = "RobustPade"
+uuid = "b6330c75-f9ac-4258-a16a-0222d98b9b6c"
+authors = ["Matthew Priddin and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1.7"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
