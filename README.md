@@ -1,4 +1,4 @@
-# RobustPade
+# RobustPade.jl
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://mjp98.github.io/RobustPade.jl/stable)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://mjp98.github.io/RobustPade.jl/dev)
