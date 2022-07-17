@@ -3,8 +3,8 @@
 robustpade(
     coeffs::AbstractVector{T},
     m::Integer,
-    n::Integer,
-    tol::Real=1e-14
+    n::Integer;
+    tol::Real=eps(float(real(T)))
 )
 
 computes the (m,n) Pade approximant to a function with Taylor coefficients 'coeffs' using SVD following Parchon et al. SIAM Review.
@@ -15,14 +15,14 @@ Adapted from the Chebfun implementation at https://github.com/chebfun/chebfun/bl
 robustpade(
     f::Function,
     m::Integer,
-    n::Integer,
-    tol::Real=1e-14
+    n::Integer;
+    x=0.
+    tol::Real=100eps()
 )
 
 computes the (m,n) Pade approximant to a function f using TaylorSeries.taylor_expand to computed the Taylor coefficients.
 
 """
-
 function robustpade(f::Function,m::Integer,n::Integer,x=0.;tol::Real = 100eps())
     taylorexpansion = taylor_expand(f, x; order=m+n+1)
     robustpade(taylorexpansion.coeffs, m,n; tol)
