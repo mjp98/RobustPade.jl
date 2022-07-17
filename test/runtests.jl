@@ -12,7 +12,7 @@ end
     # adapted from https://github.com/chebfun/chebfun/blob/master/tests/misc/test_padeapprox.m
 
     tol = 1e-10
-    @testset begin
+    @testset "from function" begin
         m,n=10,10
         f = x -> (x^4 - 3) / ((x + 3.2) * (x - 2.2))
         r = robustpade(f, 10, 10)
@@ -21,8 +21,16 @@ end
         pol, res = polesandresidues(r)
         @test norm(sort(pol) - [-3.2; 2.2]) < tol
     end
-    @testset begin
+    @testset "from coefficient vector" begin
         c = [1; 1im]
+        r = robustpade(c, 0, 1)
+        a = r.num.coeffs
+        b = r.den.coeffs
+        @test a[1] ≈ 1 atol = tol
+        @test b[2] ≈ -1im atol = tol
+    end
+    @testset "from Polynomial" begin
+        c = Polynomial([1; 1im])
         r = robustpade(c, 0, 1)
         a = r.num.coeffs
         b = r.den.coeffs
@@ -40,9 +48,12 @@ end
         @test norm(pol - [1]) < tol
         @test norm(res - [-1]) < tol
     end
-
-
-    @testset begin
+    @testset "padding" begin
+        r = robustpade([1,2,3], 5, 0)
+        @test degree(r.num) == 2
+        @test degree(r.den) == 0
+    end
+    @testset "polynomial" begin
         f = x -> 1 + x + x^4
         r = robustpade(f, 5, 0)
         @test degree(r.num) == 4
