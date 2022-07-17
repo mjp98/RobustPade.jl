@@ -40,4 +40,12 @@ end
         @test norm(pol - [1]) < tol
         @test norm(res - [-1]) < tol
     end
+
+
+    @testset begin
+        f = x -> 1 + x + x^4
+        r = robustpade(f, 5, 0)
+        @test degree(r.num) == 4
+        @test degree(r.den) == 0
+    end
 end
