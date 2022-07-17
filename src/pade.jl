@@ -1,18 +1,6 @@
 
 """
     robustpade(
-        coeffs::AbstractVector{T},
-        m::Integer,
-        n::Integer;
-        tol::Real=eps(float(real(T)))
-    )
-
-computes the (m,n) Pade approximant to a function with Taylor coefficients 'coeffs' using SVD following Parchon et al. SIAM Review.
-
-Adapted from the Chebfun implementation at https://github.com/chebfun/chebfun/blob/master/padeapprox.m (modified BSD license)
-
-
-    robustpade(
         f::Function,
         m::Integer,
         n::Integer;
@@ -23,16 +11,38 @@ Adapted from the Chebfun implementation at https://github.com/chebfun/chebfun/bl
 computes the (m,n) Pade approximant to a function f using TaylorSeries.taylor_expand to computed the Taylor coefficients.
 
 """
-function robustpade(f::Function,m::Integer,n::Integer,x=0.;tol::Real = 100eps())
+function robustpade(f::Function,m::Integer,n::Integer,x=0.,args...)
     taylorexpansion = taylor_expand(f, x; order=m+n+1)
-    robustpade(taylorexpansion.coeffs, m,n; tol)
+    robustpade(taylorexpansion, m,n,args...)
 end
 
+robustpade(p::Taylor1,args...) = robustpade(p.coeffs, args...)
+robustpade(p::Polynomial,args...) = robustpade(p.coeffs, args...)
+
+# Ensure float coefficients
 function robustpade(coeffs::AbstractVector,args...)
     robustpade(float.(coeffs), args...)
 end
 
+"""
+    robustpade(
+        coeffs::AbstractVector{T},
+        m::Integer,
+        n::Integer;
+        tol::Real=eps(float(real(T)))
+    )
+
+computes the (m,n) Pade approximant to a function with Taylor coefficients 'coeffs' using SVD following Parchon et al. SIAM Review.
+
+Adapted from the Chebfun implementation at https://github.com/chebfun/chebfun/blob/master/padeapprox.m (modified BSD license)
+
+"""
 function robustpade(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
+    a,b = robustpade_coefficients(coeffs,m,n;tol)
+    return Polynomial(a)//Polynomial(b)
+end
+
+function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
 
     @assert m >= 0 "m must be a non-negative integer."
     @assert n >= 0 "n must be a non-negative integer."
@@ -49,14 +59,14 @@ function robustpade(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real
     if issubarrayzero(col, 1:m+1, tol)
         a = zeros(T, 1)
         b = ones(T, 1)
-        return Polynomial(a)//Polynomial(b)
+        return a,b
     else
         # Compute absolute tolerance.
         ts = tol * norm(col)
         # Form Toeplitz matrix.
         Z = Toeplitz(col, row)
         # Do diagonal hopping across block.
-        m, n = robustpade_hop!(m, n, ts, Z)
+        m, n = robustpade_hop!(Z, m, n, ts)
         # Hopping finished. Now compute b and a.
         if iszero(n)
             a = first(col, m + 1)
@@ -83,11 +93,11 @@ function robustpade(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real
         # Normalise
         a ./= first(b)
         b ./= first(b)
-        return Polynomial(a)//Polynomial(b)
+        return a,b
     end
 end
 
-function robustpade_hop!(m, n, ts, Z)
+function robustpade_hop!(Z, m, n, ts)
     # Special case n == 0.
     n == 0 && return m, n
     # Form Toeplitz matrix
@@ -99,5 +109,5 @@ function robustpade_hop!(m, n, ts, Z)
     # Break if full-rank.
     Δ == 0 && return m, n   #  m-Δ < 0 && return m,n
     # Decrease m, n if rank-deficient.
-    return robustpade_hop!(m - Δ, n - Δ, ts, Z)
+    return robustpade_hop!(Z, m - Δ, n - Δ, ts)
 end
