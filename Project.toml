@@ -11,6 +11,7 @@ TaylorSeries = "6aa5eb33-94cf-58f4-a9d0-e4b2c4fc25ea"
 ToeplitzMatrices = "c751599d-da0a-543b-9d20-d0a503d91d24"
 
 [compat]
+TaylorSeries = "0.12"
 julia = "1.7"
 
 [extras]
