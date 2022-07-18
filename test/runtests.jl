@@ -59,4 +59,12 @@ end
         @test degree(r.num) == 4
         @test degree(r.den) == 0
     end
+
+    @testset "zero" begin
+        a,b = robustpade_coefficients(zeros(10), 5, 0)
+        @test a == [0]
+        @test b == [1]
+        r = robustpade(zero, 5, 0)
+        @test r(0) == 0
+    end
 end
