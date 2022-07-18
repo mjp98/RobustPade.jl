@@ -34,7 +34,7 @@ julia> r = robustpade(exp,2, 2)
 Pade approximation algorithms are available in:
 
 - [Polynomials.jl](https://github.com/JuliaMath/Polynomials.jl) method is unstable - see this [issue](https://github.com/JuliaMath/Polynomials.jl/issues/161)
-- SymPy's methods may be called, as is this [comment](https://github.com/JuliaMath/Polynomials.jl/issues/161#issuecomment-456744016). The packages [Wynn.jl](https://github.com/J-Revell/Wynn.jl) and [Pade.jl](https://github.com/J-Revell/Pade.jl) provide some methods for calculating epsilon tables using SymPy.
+- SymPy's methods may be called, as described in this [comment](https://github.com/JuliaMath/Polynomials.jl/issues/161#issuecomment-456744016). The packages [Wynn.jl](https://github.com/J-Revell/Wynn.jl) and [Pade.jl](https://github.com/J-Revell/Pade.jl) provide some methods for calculating epsilon tables using SymPy.
 
 For more general rational approximation algorithms, see
 
