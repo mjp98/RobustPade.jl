@@ -1,7 +1,7 @@
 name = "RobustPade"
 uuid = "b6330c75-f9ac-4258-a16a-0222d98b9b6c"
 authors = ["Matthew Priddin and contributors"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
@@ -11,6 +11,7 @@ TaylorSeries = "6aa5eb33-94cf-58f4-a9d0-e4b2c4fc25ea"
 ToeplitzMatrices = "c751599d-da0a-543b-9d20-d0a503d91d24"
 
 [compat]
+PaddedViews = "0.5"
 TaylorSeries = "0.12"
 julia = "1.7"
 
