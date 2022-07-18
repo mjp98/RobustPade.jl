@@ -1,7 +1,7 @@
 name = "RobustPade"
 uuid = "b6330c75-f9ac-4258-a16a-0222d98b9b6c"
 authors = ["Matthew Priddin and contributors"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
