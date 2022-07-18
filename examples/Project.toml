@@ -1,0 +1,4 @@
+[deps]
+GenericLinearAlgebra = "14197337-ba66-59df-a3e3-ca00e7dcff7a"
+RobustPade = "b6330c75-f9ac-4258-a16a-0222d98b9b6c"
+TaylorSeries = "6aa5eb33-94cf-58f4-a9d0-e4b2c4fc25ea"
