@@ -42,6 +42,11 @@ function robustpade(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real
     return Polynomial(a)//Polynomial(b)
 end
 
+function robustpade_size(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
+    a,b = robustpade_coefficients(coeffs,m,n;tol)
+    return degree(a),degree(b)
+end
+
 function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
 
     @assert m >= 0 "m must be a non-negative integer."
