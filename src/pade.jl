@@ -140,7 +140,7 @@ function robustpade_hop!(m, n, Z, ts)
     return robustpade_hop!(m - Δ, n - Δ, Z, ts)
 end
 
-function robustpade_size(f::Function,m::Integer,n::Integer,args...;kwargs...)
+function robustpade_size(f,m,n,args...;kwargs...)
     r = robustpade(f,m,n,args...;kwargs...)
     return degree(r.num),degree(r.den)
 end
