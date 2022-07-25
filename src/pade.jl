@@ -35,21 +35,20 @@
         x=0.;
         tol::Real=100eps()
 )
-
 computes the (m,n) Pade approximant to a function f using TaylorSeries.taylor_expand to computed the Taylor coefficients.
 
 """
-function robustpade(f::Function,m::Integer,n::Integer,x=0.;kwargs...)
-    taylorexpansion = taylor_expand(f, x; order=m+n+1)
-    robustpade(taylorexpansion, m,n;kwargs...)
+function robustpade(f::Function, m::Integer, n::Integer, x=0.0; kwargs...)
+    taylorexpansion = taylor_expand(f, x; order=m + n + 1)
+    robustpade(taylorexpansion, m, n; kwargs...)
 end
 
-robustpade(p::Taylor1,args...;kwargs...) = robustpade(p.coeffs, args...;kwargs...)
-robustpade(p::Polynomial,args...;kwargs...) = robustpade(p.coeffs, args...;kwargs...)
+robustpade(p::Taylor1, args...; kwargs...) = robustpade(p.coeffs, args...; kwargs...)
+robustpade(p::Polynomial, args...; kwargs...) = robustpade(p.coeffs, args...; kwargs...)
 
 # Ensure float coefficients
-function robustpade(coeffs::AbstractVector{<:Union{Integer,Complex{<:Integer}}},m::Integer, n::Integer;kwargs...)
-    robustpade(float.(coeffs), m, n;kwargs...)
+function robustpade(coeffs::AbstractVector{<:Union{Integer,Complex{<:Integer}}}, m::Integer, n::Integer; kwargs...)
+    robustpade(float.(coeffs), m, n; kwargs...)
 end
 
 """
@@ -59,15 +58,14 @@ end
         n::Integer;
         tol::Real=eps(float(real(T)))
     )
-
 computes the (m,n) Pade approximant to a function with Taylor coefficients 'coeffs' using SVD following Parchon et al. SIAM Review.
 
 Adapted from the Chebfun implementation at https://github.com/chebfun/chebfun/blob/master/padeapprox.m (modified BSD license)
 
 """
 function robustpade(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
-    a,b = robustpade_coefficients(coeffs,m,n;tol)
-    return Polynomial(a)//Polynomial(b)
+    a, b = robustpade_coefficients(coeffs, m, n; tol)
+    return Polynomial(a) // Polynomial(b)
 end
 
 function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
@@ -76,8 +74,8 @@ function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integ
     @assert n >= 0 "n must be a non-negative integer."
     @assert tol > 0 "tol must be a positive real."
 
-    if length(coeffs) < m+n+1
-        mn1,lc = m+n+1, length(coeffs)
+    if length(coeffs) < m + n + 1
+        mn1, lc = m + n + 1, length(coeffs)
         @warn "$mn1 coefficients required to determine ($m,$n) approximant. Padding coefficient vector of length $lc with zeros."
     end
 
@@ -87,7 +85,7 @@ function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integ
     if issubarrayzero(col, 1:m+1, tol)
         a = zeros(T, 1)
         b = ones(T, 1)
-        return a,b
+        return a, b
     else
         # Compute absolute tolerance.
         ts = tol * norm(col)
@@ -121,7 +119,7 @@ function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integ
         # Normalise
         a ./= first(b)
         b ./= first(b)
-        return a,b
+        return a, b
     end
 end
 
