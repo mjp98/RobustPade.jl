@@ -31,8 +31,8 @@
     robustpade(
         f::Function,
         m::Integer,
-        n::Integer;
-        x=0.
+        n::Integer,
+        x=0.;
         tol::Real=100eps()
 )
 
@@ -48,8 +48,8 @@ robustpade(p::Taylor1,args...;kwargs...) = robustpade(p.coeffs, args...;kwargs..
 robustpade(p::Polynomial,args...;kwargs...) = robustpade(p.coeffs, args...;kwargs...)
 
 # Ensure float coefficients
-function robustpade(coeffs::AbstractVector,args...;kwargs...)
-    robustpade(float.(coeffs), args...;kwargs...)
+function robustpade(coeffs::AbstractVector,m::Integer, n::Integer;kwargs...)
+    robustpade(float.(coeffs), m,n;kwargs...)
 end
 
 """
@@ -140,7 +140,7 @@ function robustpade_hop!(m, n, Z, ts)
     return robustpade_hop!(m - Δ, n - Δ, Z, ts)
 end
 
-function robustpade_size(args...;kwargs...)
-    r = robustpade(args...;kwargs...)
+function robustpade_size(f::Function,m::Integer,n::Integer,x=0.;kwargs...)
+    r = robustpade(f,m,n,x;kwargs...)
     return degree(r.num),degree(r.den)
 end
