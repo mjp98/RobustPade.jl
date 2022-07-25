@@ -140,7 +140,11 @@ function robustpade_hop!(m, n, Z, ts)
     return robustpade_hop!(m - Δ, n - Δ, Z, ts)
 end
 
-function robustpade_size(f,m,n,args...;kwargs...)
-    r = robustpade(f,m,n,args...;kwargs...)
-    return degree(r.num),degree(r.den)
+function robustpade_size(f, m, n, args...; kwargs...)
+    r = robustpade(f, m, n, args...; kwargs...)
+    return degree(r.num), degree(r.den)
 end
+
+
+robustpade_table(f::Function, M, N, x=0.0; tol=1e-15) = [robustpade_size(f, m, n, x; tol) for m = 0:M, n = 0:N]
+robustpade_table(coeffs::AbstractVector, M, N; tol=1e-15) = [robustpade_size(coeffs, m, n; tol) for m = 0:M, n = 0:N]
