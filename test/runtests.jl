@@ -52,12 +52,13 @@ end
         r = robustpade([1,2,3], 5, 0)
         @test degree(r.num) == 2
         @test degree(r.den) == 0
+
     end
     @testset "polynomial" begin
         f = x -> 1 + x + x^4
-        r = robustpade(f, 5, 0)
-        @test degree(r.num) == 4
-        @test degree(r.den) == 0
+        m,n = robustpade_size(f, 5, 0)
+        @test m==4
+        @test n==0
     end
 
     @testset "zero" begin

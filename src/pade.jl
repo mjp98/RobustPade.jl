@@ -11,17 +11,17 @@
 computes the (m,n) Pade approximant to a function f using TaylorSeries.taylor_expand to computed the Taylor coefficients.
 
 """
-function robustpade(f::Function,m::Integer,n::Integer,x=0.,args...)
+function robustpade(f::Function,m::Integer,n::Integer,x=0.;kwargs...)
     taylorexpansion = taylor_expand(f, x; order=m+n+1)
-    robustpade(taylorexpansion, m,n,args...)
+    robustpade(taylorexpansion, m,n;kwargs...)
 end
 
-robustpade(p::Taylor1,args...) = robustpade(p.coeffs, args...)
-robustpade(p::Polynomial,args...) = robustpade(p.coeffs, args...)
+robustpade(p::Taylor1,args...;kwargs...) = robustpade(p.coeffs, args...;kwargs...)
+robustpade(p::Polynomial,args...;kwargs...) = robustpade(p.coeffs, args...;kwargs...)
 
 # Ensure float coefficients
-function robustpade(coeffs::AbstractVector,args...)
-    robustpade(float.(coeffs), args...)
+function robustpade(coeffs::AbstractVector,args...;kwargs...)
+    robustpade(float.(coeffs), args...;kwargs...)
 end
 
 """
@@ -40,11 +40,6 @@ Adapted from the Chebfun implementation at https://github.com/chebfun/chebfun/bl
 function robustpade(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
     a,b = robustpade_coefficients(coeffs,m,n;tol)
     return Polynomial(a)//Polynomial(b)
-end
-
-function robustpade_size(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
-    a,b = robustpade_coefficients(coeffs,m,n;tol)
-    return degree(a),degree(b)
 end
 
 function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integer; tol::Real=epsreal(T)) where {T<:RealOrComplexFloat}
@@ -71,7 +66,7 @@ function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integ
         # Form Toeplitz matrix.
         Z = Toeplitz(col, row)
         # Do diagonal hopping across block.
-        m, n = robustpade_hop!(Z, m, n, ts)
+        m, n = robustpade_hop!(m, n, Z, ts)
         # Hopping finished. Now compute b and a.
         if iszero(n)
             a = first(col, m + 1)
@@ -102,7 +97,7 @@ function robustpade_coefficients(coeffs::AbstractVector{T}, m::Integer, n::Integ
     end
 end
 
-function robustpade_hop!(Z, m, n, ts)
+function robustpade_hop!(m, n, Z, ts)
     # Special case n == 0.
     n == 0 && return m, n
     # Form Toeplitz matrix
@@ -114,5 +109,10 @@ function robustpade_hop!(Z, m, n, ts)
     # Break if full-rank.
     Δ == 0 && return m, n   #  m-Δ < 0 && return m,n
     # Decrease m, n if rank-deficient.
-    return robustpade_hop!(Z, m - Δ, n - Δ, ts)
+    return robustpade_hop!(m - Δ, n - Δ, Z, ts)
+end
+
+function robustpade_size(args...;kwargs...)
+    r = robustpade(args...;kwargs...)
+    return degree(r.num),degree(r.den)
 end
