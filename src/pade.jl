@@ -34,7 +34,7 @@
         n::Integer,
         x=0.;
         tol::Real=100eps()
-)
+    )
 
 computes the (m,n) Pade approximant to a function f using TaylorSeries.taylor_expand to computed the Taylor coefficients.
 
