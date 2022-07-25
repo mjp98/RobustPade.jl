@@ -3,6 +3,7 @@
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://mjp98.github.io/RobustPade.jl/dev)
 [![Build Status](https://github.com/mjp98/RobustPade.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mjp98/RobustPade.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![Coverage](https://codecov.io/gh/mjp98/RobustPade.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/mjp98/RobustPade.jl)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 Julia implementation of the Pade approximation algorithm of P. Gonnet, S. Guettel, and L. N. Trefethen, "Robust Pade approximation via SVD", SIAM Rev., 55:101-117, 2013.
 
@@ -29,6 +30,7 @@ Construct a Pade approximant of the exponential function of type (2,2), returnin
 julia> r = robustpade(exp,2, 2)
 (1.0 + 0.4999999999999998*x + 0.08333333333333322*x^2) // (1.0 - 0.5000000000000002*x + 0.08333333333333347*x^2)
 ```
+When the first argument is a function, TaylorSeries.taylor_expand is called to generate the taylor expansion from which the Pade approximation is computed.
 
 ## Similar packages
 Pade approximation algorithms are available in:
