@@ -48,7 +48,7 @@ robustpade(p::Taylor1,args...;kwargs...) = robustpade(p.coeffs, args...;kwargs..
 robustpade(p::Polynomial,args...;kwargs...) = robustpade(p.coeffs, args...;kwargs...)
 
 # Ensure float coefficients
-function robustpade(coeffs::AbstractVector,m::Integer, n::Integer;kwargs...)
+function robustpade(coeffs::AbstractVector{T<:Union{Integer,Complex{<:Integer}}},m::Integer, n::Integer;kwargs...)
     robustpade(float.(coeffs), m,n;kwargs...)
 end
 
