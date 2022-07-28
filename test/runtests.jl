@@ -73,11 +73,27 @@ end
         @test degree(r.den) == 0
 
     end
-    @testset "polynomial" begin
+    @testset "Polynomial size" begin
         f = x -> 1 + x + x^4
         m,n = robustpade_size(f, 5, 0)
         @test m==4
         @test n==0
+    end
+
+    @testset "Vector size" begin
+        f = [1, 1 , 0, 0, 1]
+        m,n = robustpade_size(f, 5, 0)
+        @test m==4
+        @test n==0
+    end
+
+    @testset "Pade table" begin
+        reference_cos22 =  [
+            (0, 0)  (0, 0)  (0, 2);
+            (0, 0)  (0, 0)  (0, 2);
+            (2, 0)  (2, 0)  (2, 2)]
+        cos22 = robustpade_table(cos, 2, 2)
+        @test cos22 == reference_cos22
     end
 
     @testset "zero" begin
