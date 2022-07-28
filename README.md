@@ -24,7 +24,7 @@ julia> using RobustPade
 ```
 ### Example
 
-Construct a Pade approximant of the exponential function of type (2,2), returning a Polynomials.RationalFunction
+Construct a Pade approximant of ``\exp`` of type ``(2,2)``, returning a `Polynomials.RationalFunction`
 
 ```julia
 julia> r = robustpade(exp,2, 2)
