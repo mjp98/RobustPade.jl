@@ -119,9 +119,9 @@ uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
-git-tree-sha1 = "c5544d8abb854e306b7b2f799ab31cdba527ccae"
+git-tree-sha1 = "5158c2b41018c5f7eb1470d558127ac274eca0c9"
 uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
-version = "0.9.0"
+version = "0.9.1"
 
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
@@ -613,7 +613,7 @@ version = "1.3.0"
 
 [[deps.RobustPade]]
 deps = ["LinearAlgebra", "PaddedViews", "Polynomials", "TaylorSeries", "ToeplitzMatrices"]
-git-tree-sha1 = "fd9e737d6cc1208db20453c1b68403e37ffb87e9"
+git-tree-sha1 = "0ea2831dbe900858c88c4d264eccad5b97c24dc0"
 repo-rev = "main"
 repo-url = "https://github.com/mjp98/RobustPade.jl"
 uuid = "b6330c75-f9ac-4258-a16a-0222d98b9b6c"
@@ -684,9 +684,9 @@ version = "1.4.0"
 
 [[deps.StatsBase]]
 deps = ["DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
-git-tree-sha1 = "472d044a1c8df2b062b23f222573ad6837a615ba"
+git-tree-sha1 = "0005d75f43ff23688914536c5e9d5ac94f8077f7"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.33.19"
+version = "0.33.20"
 
 [[deps.StructArrays]]
 deps = ["Adapt", "DataAPI", "StaticArrays", "Tables"]
