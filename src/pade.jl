@@ -41,7 +41,7 @@ computes the (m,n) Pade approximant to a function f using TaylorSeries.taylor_ex
 """
 function robustpade(f::Function, m::Integer, n::Integer, x::T=0.0; tol::Real=100epsreal(T)) where T<: Number
     taylorexpansion = taylor_expand(f, x; order=m + n + 1)
-    robustpade(taylorexpansion, m, n; kwargs...)
+    robustpade(taylorexpansion, m, n; tol)
 end
 
 
