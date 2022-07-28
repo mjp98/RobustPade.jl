@@ -1,6 +1,6 @@
 # Helper functions
 const RealOrComplexFloat = Union{AbstractFloat,Complex{<:AbstractFloat}}
-const epsreal = eps ∘ float ∘ real
+epsreal(z) = eps(float(real(z)))
 
 # Try to match MATLAB svd(A,0) described at https://uk.mathworks.com/help/matlab/ref/double.svd.html
 
