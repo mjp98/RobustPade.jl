@@ -159,7 +159,7 @@ function robustpade(
     end
 end
 
-function robustpade_hop!(m, n, Z, ts)
+function robustpade_hop!(m::Integer, n::Integer, Z, ts)
     # Special case n == 0.
     n == 0 && return m, n
     # Form Toeplitz matrix
@@ -176,35 +176,35 @@ end
 
 
 """
-    robustpade_table(f,M,N,args...;kwargs...)
+    robustpade_table(f,M::Integer,N::Integer,args...;kwargs...)
 
 computes the (M+1) x (N+1) Pade table corresponding to f
 
 """
-function robustpade_table(f, M, N, args...; kwargs...)
+function robustpade_table(f, M::Integer, N::Integer, args...; kwargs...)
     return [robustpade_size(f, m, n, args...; kwargs...) for m = 0:M, n = 0:N]
 end
 
 
 
 """
-    robustpade_table(f,m,n,args...;kwargs...)
+    robustpade_table(f,m::Integer,n::Integer,args...;kwargs...)
 
 computes the degrees of the (m,n) Pade approximant corresponding to f
 
 """
-function robustpade_size(f, m, n, args...; kwargs...)
+function robustpade_size(f, m::Integer, n::Integer, args...; kwargs...)
     r = robustpade(f, m, n, args...; kwargs...)
     return degree(r.num), degree(r.den)
 end
 
 """
-    robustpade_size(f::AbstractVector,m,n;kwargs...)
+    robustpade_size(f::AbstractVector,m::Integer,n::Integer;kwargs...)
 
 computes the degrees of the (m,n) Pade approximant corresponding to the Taylor expansion coefficients f
 
 """
-function robustpade_size(f::AbstractVector, m, n; kwargs...)
+function robustpade_size(f::AbstractVector, m::Integer, n::Integer; kwargs...)
     p, q = robustpade(f, m, n; kwargs...)
     return length(p) - 1, length(q) - 1
 end
