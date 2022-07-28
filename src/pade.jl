@@ -28,18 +28,18 @@
 
 
 """
-robustpade(
-    f::Function,
-    m::Integer,
-    n::Integer,
-    x::T=0.;
-    tol::Real=100eps(float(real(T)))
-) where T<:Number
+    robustpade(
+        f::Function,
+        m::Integer,
+        n::Integer,
+        x::T=0.;
+        tol::Real=100eps(float(real(T)))
+    ) where T<:Number
 
 computes the (m,n) Pade approximant to a function f using TaylorSeries.taylor_expand to compute the Taylor expansion at x.
 
 """
-function robustpade(f::Function, m::Integer, n::Integer, x=0.0; kwargs...)
+function robustpade(f::Function, m::Integer, n::Integer, x::T=0.0; tol::Real=100epsreal(T)) where T<: Number
     taylorexpansion = taylor_expand(f, x; order=m + n + 1)
     robustpade(taylorexpansion, m, n; kwargs...)
 end
