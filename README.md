@@ -30,7 +30,7 @@ Construct a Pade approximant of the exponential function of type (2,2), returnin
 julia> r = robustpade(exp,2, 2)
 (1.0 + 0.4999999999999998*x + 0.08333333333333322*x^2) // (1.0 - 0.5000000000000002*x + 0.08333333333333347*x^2)
 ```
-When the first argument is a function, TaylorSeries.taylor_expand is called to generate the taylor expansion from which the Pade approximation is computed.
+When the first argument is a function, `TaylorSeries.taylor_expand` is called to generate the taylor expansion from which the Pade approximation is computed.
 
 ## Similar packages
 Pade approximation algorithms are available in:

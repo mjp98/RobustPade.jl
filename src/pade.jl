@@ -36,7 +36,7 @@
         tol::Real=100eps(float(real(T)))
     ) where T<:Number
 
-computes the (m,n) Pade approximant to a function f using TaylorSeries.taylor_expand to compute the Taylor expansion at x.
+computes the `(m,n)` Pade approximant to a function `f` using `TaylorSeries.taylor_expand` to compute the Taylor expansion at `x`.
 
 """
 function robustpade(f::Function, m::Integer, n::Integer, x::T=0.0; tol::Real=100epsreal(T)) where T<: Number
@@ -53,7 +53,7 @@ end
         kwargs...
     )
 
-computes the (m,n) Pade approximant corresponding to the Taylor expansion given by a TaylorSeries.Taylor1 f
+computes the `(m,n)` Pade approximant corresponding to the Taylor expansion given by a `f::TaylorSeries.Taylor1`
 
 """
 function robustpade(p::Taylor1, args...; kwargs...)
@@ -70,7 +70,7 @@ end
         kwargs...
     )
 
-computes the (m,n) Pade approximant corresponding to the Taylor expansion given by a Polynomials.Polynomial f
+computes the `(m,n)` Pade approximant corresponding to the Taylor expansion given by a `f::Polynomials.Polynomial`
 
 """
 function robustpade(p::Polynomial, args...; kwargs...)
@@ -93,8 +93,9 @@ robustpade(
     m::Integer,
     n::Integer;
     tol::Real=eps(float(real(T)))
-) where T
-computes the (m,n) Pade approximant to a function with Taylor coefficients 'coeffs' using SVD following Parchon et al. SIAM Review.
+    ) where T
+
+computes the `(m,n)` Pade approximant to a function with Taylor coefficients `coeffs::AbstractVector` using SVD following Parchon et al. SIAM Review.
 
 Adapted from the Chebfun implementation at https://github.com/chebfun/chebfun/blob/master/padeapprox.m (modified BSD license)
 
@@ -178,7 +179,7 @@ end
 """
     robustpade_table(f,M::Integer,N::Integer,args...;kwargs...)
 
-computes the (M+1) x (N+1) Pade table corresponding to f
+computes the `(0:M,0:N)` Pade table corresponding to `f`
 
 """
 function robustpade_table(f, M::Integer, N::Integer, args...; kwargs...)
@@ -190,7 +191,7 @@ end
 """
     robustpade_table(f,m::Integer,n::Integer,args...;kwargs...)
 
-computes the degrees of the (m,n) Pade approximant corresponding to f
+computes the degrees of the `(m,n)` Pade approximant corresponding to `f`
 
 """
 function robustpade_size(f, m::Integer, n::Integer, args...; kwargs...)
@@ -201,7 +202,7 @@ end
 """
     robustpade_size(f::AbstractVector,m::Integer,n::Integer;kwargs...)
 
-computes the degrees of the (m,n) Pade approximant corresponding to the Taylor expansion coefficients f
+computes the degrees of the `(m,n)` Pade approximant corresponding to the Taylor expansion coefficients `f`
 
 """
 function robustpade_size(f::AbstractVector, m::Integer, n::Integer; kwargs...)
