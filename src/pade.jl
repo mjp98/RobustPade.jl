@@ -88,11 +88,11 @@ function robustpade(
 end
 
 """
-robustpade(
-    coeffs::AbstractVector{T},
-    m::Integer,
-    n::Integer;
-    tol::Real=eps(float(real(T)))
+    robustpade(
+        coeffs::AbstractVector{T},
+        m::Integer,
+        n::Integer;
+        tol::Real=eps(float(real(T)))
     ) where T
 
 computes the `(m,n)` Pade approximant to a function with Taylor coefficients `coeffs::AbstractVector` using SVD following Parchon et al. SIAM Review.
