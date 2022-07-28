@@ -52,17 +52,7 @@ end
     end
     @testset "from coefficient vector" begin
         c = [1; 1im]
-        r = robustpade(c, 0, 1)
-        a = r.num.coeffs
-        b = r.den.coeffs
-        @test a[1] ≈ 1 atol = tol
-        @test b[2] ≈ -1im atol = tol
-    end
-    @testset "from Polynomial" begin
-        c = Polynomial([1; 1im])
-        r = robustpade(c, 0, 1)
-        a = r.num.coeffs
-        b = r.den.coeffs
+        a,b = robustpade(c, 0, 1)
         @test a[1] ≈ 1 atol = tol
         @test b[2] ≈ -1im atol = tol
     end
@@ -78,7 +68,7 @@ end
         @test norm(res - [-1]) < tol
     end
     @testset "padding" begin
-        r = robustpade([1,2,3], 5, 0)
+        r = robustpade(Polynomial([1,2,3]), 5, 0)
         @test degree(r.num) == 2
         @test degree(r.den) == 0
 
@@ -91,7 +81,7 @@ end
     end
 
     @testset "zero" begin
-        a,b = robustpade_coefficients(zeros(10), 5, 0)
+        a,b = robustpade(zeros(10), 5, 0)
         @test a == [0]
         @test b == [1]
         r = robustpade(zero, 5, 0)
