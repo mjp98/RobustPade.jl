@@ -161,5 +161,5 @@ end
 
 function robustpade_size(f::AbstractVector, m, n; kwargs...)
     p, q = robustpade(f, m, n; kwargs...)
-    return length(p) + 1, length(q) + 1
+    return length(p) - 1, length(q) - 1
 end
